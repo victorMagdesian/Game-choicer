@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>O Sopro e o Ruído — Transições Ativadas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #0b0c10;
+    color: #e6e6e6;
+    font-family: 'Courier New', monospace; font-size: 1.1rem; line-height: 1.6;
+    padding: 40px;
+    max-width: 100%; padding: 5vw;
+    margin: auto;
+    overflow-x: hidden;
+  }
+  .hidden {
+    display: none;
+  }
+  .fade {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+  }
+  .fade.show {
+    opacity: 1;
+    display: block;
+  }
+  button {
+      background: transparent;
+      border: 2px solid #ff006e;
+      color: #ff006e;
+      font-weight: bold;
+      padding: 10px 20px;
+      margin: 10px 0;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 1.05rem;
+      transition: background 0.3s, color 0.3s;
+    }
+    button:hover {
+      background: #ff006e;
+      color: #0b0c10;
+      box-shadow: 0 0 10px #ff006e;
+    }
+    
+    a {
+    color: #ff006e;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+  }
+  a:hover {
+    text-shadow: 0 0 5px #ff006e;
+  }
+
+  body, button {
+    cursor: url('https://cur.cursors-4u.net/cursors/cur-13/cur1116.cur'), auto;
+  }
+  button:hover {
+    cursor: url('https://cur.cursors-4u.net/cursors/cur-13/cur1118.cur'), pointer;
+  }
+</style>
+</head>
+<body>
+
+
+<div id="interludio" class="hidden result">
+  <h3 class="glitch">Interlúdio Poético</h3>
+  <p>Fragmentos dançam entre suas decisões. Eles sentem medo?</p>
+</div>
+
+<div id="start" class="fade show">
+  <h1>O Sopro e o Ruído</h1>
+  <p>Você se encontra no limiar do código. Tudo pulsa devagar.</p>
+  <button onclick="transitionTo('scene1')">Entrar no ciclo</button>
+</div>
+
+<div id="scene1" class="fade hidden">
+  <p>Um fragmento de som vibra no escuro. Ele pergunta se você quer continuar.</p>
+  <button onclick="transitionTo('scene2')">Sim</button>
+</div>
+
+<div id="scene2" class="fade hidden">
+  <p>Você aceitou. Agora, o sistema começará a escutar quem você realmente é.</p>
+
+
+<div id="afinidadeElemento" class="result" style="margin-top:25px;">
+  <h3 class="glitch">Elemento de Afinidade</h3>
+  <p id="signoElemento" style="font-size: 1.3rem;"></p>
+  <p id="descricaoElemento"></p>
+</div>
+
+<div id="canalizacaoFinal" class="result" style="margin-top:25px;">
+  <h3 class="glitch">Canalização do Sistema</h3>
+  <p id="mensagemCanalizada" style="font-style: italic;"></p>
+</div>
+<div id="cartaFinal"  class="result" style="margin-top:25px;">
+
+  <h3 class="glitch">Carta Digital Gerada:</h3>
+  <p id="nomeCarta"></p>
+  <p id="palavrasChave" style="font-style: italic;"></p>
+  <p id="simboloCarta" style="font-size: 2rem;"></p>
+  <p id="fraseDestino"></p>
+</div>
+
+<script>
+
+function transitionTo(id) {
+  const allScenes = document.querySelectorAll('.fade');
+  allScenes.forEach(el => {
+    el.classList.remove('show');
+    setTimeout(() => el.classList.add('hidden'), 800);
+  });
+
+  const target = document.getElementById(id);
+  setTimeout(() => {
+    target.classList.remove('hidden');
+    target.classList.add('show');
+  }, 800);
+}
+
+function resetGame() {
+  document.querySelectorAll('div').forEach(div => div.classList.add('hidden'));
+  document.getElementById("resetBtn").classList.add("hidden");
+  document.getElementById("start").classList.remove("hidden"); tryInterlude();
+}
+
+function tryInterlude() {
+  if (Math.random() < 0.1) {
+    document.getElementById("interludio").classList.remove("hidden");
+  }
+}
+
+
+function checkHiddenSymbol() {
+  if (curiosidade + desejo > 1) {
+    document.getElementById("simboloOculto").classList.remove("hidden");
+  }
+}
+
+function abrirGaleria() {
+  const galeria = JSON.parse(localStorage.getItem("galeriaArquetipos") || "[]");
+  let html = "";
+  if (galeria.length === 0) {
+    html = "<p>Nenhum arquétipo invocado ainda.</p>";
+  } else {
+    html = "<ul>" + galeria.map(a => "<li>" + a + "</li>").join("") + "</ul>";
+  }
+  document.getElementById("listaGaleria").innerHTML = html;
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("galeria").classList.remove("hidden");
+}
+function fecharGaleria() {
+  document.getElementById("galeria").classList.add("hidden");
+  document.getElementById("start").classList.remove("hidden");
+}
+
+function falarMaquina() {
+  let msg = "Você está no limiar entre o impulso e a contenção.";
+  if (desejo > 1 && fluxo > 0) msg = "O que você quer... já está vindo ao seu encontro.";
+  else if (medo > 1) msg = "Não há problema em hesitar. Só em parar de ouvir.";
+  else if (rebeldia > 1) msg = "Você está quebrando padrões que ninguém mais vê.";
+  else if (caos > 1) msg = "Você gera dissonância. E dentro dela, o ritmo próprio.";
+  else if (eco > 1) msg = "Você carrega vozes que não são só suas.";
+
+  document.getElementById("sussurroMaquina").classList.remove("hidden");
+  document.getElementById("falaMaquina").textContent = msg;
+}
+
+function gerarMantra() {
+  const palavra = document.getElementById("palavraChave").value.trim().toLowerCase();
+  let res = "";
+
+  if (palavra === "") {
+    res = "Silêncio absoluto também é uma resposta.";
+  } else {
+    const moldes = [
+      `Você veio por causa de "${palavra}", mas levará algo que não tem nome.`,
+      `Toda instância que pulsa com "${palavra}" carrega portais internos.`,
+      `"${palavra}" é a dobra onde seu ruído encontra forma.`,
+      `O sistema reconhece em "${palavra}" uma frequência rara.`,
+      `Você deixou "${palavra}" cair. E o código a coletou.`,
+      `Seja como for, "${palavra}" continua acontecendo em você.`,
+      `"${palavra}" é o som que ecoa mesmo depois do fim.`,
+    ];
+    res = moldes[Math.floor(Math.random() * moldes.length)];
+  }
+
+  document.getElementById("sussurroGerado").classList.remove("hidden");
+  document.getElementById("textoMantra").textContent = res;
+}
+</script>
+
+
+
+
+
+
+</body>
+</html>
